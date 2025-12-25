@@ -2,16 +2,19 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Login - Catatan Keuangan</title>
+<title>CatatUang - Login</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* RESET */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+/* BODY */
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
   background: #2196F3;
   height: 100vh;
@@ -20,29 +23,41 @@ body {
   justify-content: center;
 }
 
-.login-box {
+/* CARD LOGIN */
+.auth-card {
   background: #ffffff;
   width: 320px;
-  padding: 24px;
-  border-radius: 14px;
+  padding: 26px;
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
   text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
-.login-box h3 {
-  margin-bottom: 20px;
+/* LOGO */
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2196F3;
+  margin-bottom: 22px;
 }
 
-.login-box input {
+/* INPUT WRAPPER */
+.form-group {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+/* INPUT */
+.form-group input {
   width: 100%;
   padding: 12px;
-  margin-bottom: 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
 }
 
-.login-box button {
+/* BUTTON */
+.btn {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
@@ -51,32 +66,44 @@ body {
   color: #fff;
   font-size: 14px;
   cursor: pointer;
+  margin-top: 8px;
 }
 
-.login-box button:hover {
+.btn.secondary {
   background: #1e88e5;
 }
 
-.login-box p {
-  font-size: 12px;
-  color: #777;
-  margin-top: 12px;
+/* LINK */
+.skip {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #2196F3;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="login-box">
-  <h3>Login</h3>
-  <input type="password" placeholder="Masukkan PIN">
-  <button onclick="masuk()">Masuk</button>
-  <p>*Login dummy</p>
+<div class="auth-card">
+  <div class="logo">💰 CatatUang</div>
+
+  <div class="form-group">
+    <input type="text" placeholder="Email (dummy)">
+  </div>
+
+  <div class="form-group">
+    <input type="password" placeholder="PIN">
+  </div>
+
+  <button class="btn" onclick="masuk()">Sign In</button>
+  <button class="btn secondary" onclick="masuk()">Sign Up</button>
+
+  <div class="skip" onclick="masuk()">Lewati tanpa login</div>
 </div>
 
 <script>
 function masuk() {
-  // login dummy, langsung masuk ke sistem
   window.location.href = "home.html";
 }
 </script>
