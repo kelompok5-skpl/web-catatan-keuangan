@@ -2,201 +2,330 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Catatan Keuangan</title>
+<title>CatatUang</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-*{box-sizing:border-box}
 body{margin:0;font-family:Arial;background:#f2f4f8}
-header{background:#2196F3;color:#fff;padding:16px;text-align:center;font-size:18px}
-.tabs{display:flex;background:#fff;border-bottom:1px solid #ddd}
-.tabs button{flex:1;padding:12px;border:none;background:none;cursor:pointer}
-.tabs button.active{color:#2196F3;border-bottom:3px solid #2196F3;font-weight:bold}
-.content{padding:16px;margin-bottom:90px}
-.card{background:#fff;padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
-.fab{position:fixed;right:20px;bottom:20px;width:56px;height:56px;border-radius:50%;background:#2196F3;color:#fff;font-size:32px;border:none;cursor:pointer}
-.fab-menu{position:fixed;right:20px;bottom:90px;display:none;flex-direction:column;gap:10px}
-.fab-menu button{background:#fff;padding:10px 14px;border:none;border-radius:10px;cursor:pointer}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center}
-.hidden{display:none}
-.modal-box{background:#fff;width:90%;max-width:360px;padding:20px;border-radius:14px}
-.modal-box input,.modal-box select{width:100%;padding:10px;margin-bottom:10px}
-.modal-box button{width:100%;padding:10px;border:none;border-radius:8px;background:#2196F3;color:#fff}
-.cancel{background:#aaa;margin-top:8px}
+
+/* HEADER */
+header{
+  background:#2196F3;
+  color:#fff;
+  padding:14px;
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+}
+
+/* CONTENT */
+.content{padding:14px;padding-bottom:90px}
+
+/* CARD */
+.card{
+  background:#fff;
+  padding:14px;
+  border-radius:14px;
+  margin-bottom:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.08)
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  color:#aaa;
+  margin-top:60px;
+}
+.empty img{width:150px;opacity:.8}
+
+/* FAB */
+.fab{
+  position:fixed;
+  right:20px;
+  bottom:90px;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:#2196F3;
+  color:#fff;
+  font-size:32px;
+  border:none;
+  cursor:pointer;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+}
+.modal-content{
+  background:#fff;
+  width:90%;
+  max-width:340px;
+  margin:100px auto;
+  padding:20px;
+  border-radius:14px;
+}
+input,select{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  box-sizing:border-box;
+}
+.modal-content button{
+  width:100%;
+  padding:10px;
+  margin-top:12px;
+  border:none;
+  border-radius:8px;
+}
+.btn-primary{background:#2196F3;color:#fff}
+.btn-cancel{background:#ccc;color:#000}
+
+/* NAV */
+nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  display:flex;
+  border-top:1px solid #ddd;
+}
+nav button{
+  flex:1;
+  padding:10px;
+  border:none;
+  background:none;
+  font-size:12px;
+  color:#555;
+  cursor:pointer;
+}
+nav button.active{
+  color:#2196F3;
+  font-weight:bold;
+}
 </style>
 </head>
 
 <body>
 
-<header id="title">Transaksi</header>
-
-<div class="tabs">
-  <button class="active" onclick="showTab('transaksi',this)">Transaksi</button>
-  <button onclick="showTab('rekening',this)">Rekening</button>
-  <button onclick="showTab('rekap',this)">Rekap</button>
-  <button onclick="showTab('hutang',this)">Hutang</button>
-  <button onclick="showTab('setelan',this)">Setelan</button>
-</div>
+<header>💰 CatatUang</header>
 
 <div class="content">
 
-<div id="transaksi">
-  <div id="listTransaksi"></div>
-</div>
-
-<div id="rekening" class="hidden">
-  <div class="card">Tunai: Rp <span id="tunai">0</span></div>
-  <div class="card">Bank: Rp <span id="bank">0</span></div>
+<!-- HOME -->
+<div id="home">
+  <div class="card" style="text-align:center">
+    <div style="font-size:48px">💰</div>
+    <h2 style="margin:6px 0;color:#2196F3">CatatUang</h2>
+    <p style="font-size:13px;color:#777">
+      Aplikasi pencatatan keuangan sederhana
+    </p>
+  </div>
 
   <div class="card">
-    <b>Pindah Saldo</b><br><br>
-    <select id="from">
-      <option value="tunai">Tunai</option>
-      <option value="bank">Bank</option>
-    </select><br><br>
-    <select id="to">
-      <option value="bank">Bank</option>
-      <option value="tunai">Tunai</option>
-    </select><br><br>
-    <input type="number" id="jumlah" placeholder="Jumlah"><br><br>
-    <button onclick="pindahSaldo()">Pindah</button>
+    <b>Saldo:</b> Rp <span id="saldo">0</span>
   </div>
 </div>
 
-<div id="rekap" class="hidden">
-  <div class="card">Total Pemasukan: Rp <span id="totalMasuk">0</span></div>
-  <div class="card">Total Pengeluaran: Rp <span id="totalKeluar">0</span></div>
-  <div class="card"><b>Sisa Saldo:</b> Rp <span id="sisaSaldo">0</span></div>
+<!-- TRANSAKSI -->
+<div id="transaksi" style="display:none">
+  <div id="transaksiList"></div>
+
+  <div id="transaksiEmpty" class="empty">
+    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png">
+    <p>Tidak ada data</p>
+  </div>
 </div>
 
-<div id="hutang" class="hidden">
-  <div id="listHutang"></div>
+<!-- REKAP -->
+<div id="rekap" style="display:none">
+  <div id="rekapContent"></div>
+
+  <div id="rekapEmpty" class="empty">
+    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png">
+    <p>Tidak ada data</p>
+  </div>
 </div>
 
-<div id="setelan" class="hidden">
+<!-- HUTANG -->
+<div id="hutang" style="display:none">
+  <div class="empty">
+    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png">
+    <p>Tidak ada data</p>
+  </div>
+</div>
+
+<!-- SETELAN -->
+<div id="setelan" style="display:none">
   <div class="card">
     Tema: Default<br><br>
     Bahasa: Indonesia<br><br>
-    Keamanan: PIN (dummy)<br><br>
-    <button style="background:#e53935" onclick="mintaPin()">Reset Semua Data</button>
+    Keamanan: PIN (dummy)
+    <button style="background:#e53935;color:#fff;margin-top:14px"
+      onclick="resetData()">Reset Semua Data</button>
   </div>
 </div>
 
 </div>
 
-<div class="fab-menu" id="fabMenu">
-  <button onclick="openModal('pemasukan')">Pemasukan</button>
-  <button onclick="openModal('pengeluaran')">Pengeluaran</button>
-  <button onclick="openModal('hutang')">Hutang</button>
-</div>
-<button class="fab" onclick="toggleFab()">+</button>
+<!-- FAB -->
+<button class="fab" onclick="openModal()">+</button>
 
-<div id="modal" class="modal hidden" onclick="closeModal(event)">
-  <div class="modal-box" onclick="event.stopPropagation()">
-    <h3 id="modalTitle">Tambah</h3>
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Tambah Transaksi</h3>
+
+    <select id="jenis">
+      <option value="pemasukan">Pemasukan</option>
+      <option value="pengeluaran">Pengeluaran</option>
+      <option value="hutang">Hutang</option>
+    </select>
+
     <input type="number" id="nominal" placeholder="Nominal">
+
     <select id="kategori">
-      <option>Umum</option>
       <option>Kebutuhan Pokok</option>
       <option>Transportasi</option>
       <option>Hiburan</option>
+      <option>Umum</option>
     </select>
-    <button onclick="simpan()">Simpan</button>
-    <button class="cancel" onclick="closeModal()">Batal</button>
+
+    <button class="btn-primary" onclick="simpan()">Simpan</button>
+    <button class="btn-cancel" onclick="closeModal()">Batal</button>
   </div>
 </div>
 
+<nav>
+  <button class="active" onclick="show('home',this)">Home</button>
+  <button onclick="show('transaksi',this)">Transaksi</button>
+  <button onclick="show('rekap',this)">Rekap</button>
+  <button onclick="show('hutang',this)">Hutang</button>
+  <button onclick="show('setelan',this)">Setelan</button>
+</nav>
+
 <script>
-const PIN = "1234";
-let data = JSON.parse(localStorage.getItem('catatan_keuangan')) || {
-  transaksi: [], hutang: [], tunai: 0, bank: 0
-};
+let data = JSON.parse(localStorage.getItem('data')) || [];
+let hutang = JSON.parse(localStorage.getItem('hutang')) || [];
 
-let { transaksi, hutang, tunai, bank } = data;
-let tipe = "";
+const saldoEl = document.getElementById('saldo');
+const transaksiList = document.getElementById('transaksiList');
+const transaksiEmpty = document.getElementById('transaksiEmpty');
+const rekapContent = document.getElementById('rekapContent');
+const rekapEmpty = document.getElementById('rekapEmpty');
+const modal = document.getElementById('modal');
 
-function save(){
-  localStorage.setItem('catatan_keuangan', JSON.stringify({transaksi,hutang,tunai,bank}));
-}
+function show(id,el){
+  document.querySelectorAll('.content>div').forEach(d=>d.style.display='none');
+  document.getElementById(id).style.display='block';
 
-function showTab(id,el){
-  document.querySelectorAll('.content>div').forEach(d=>d.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
-  title.innerText=el.innerText;
+
+  render();
 }
 
-function toggleFab(){fabMenu.style.display=fabMenu.style.display==='flex'?'none':'flex'}
-function openModal(t){tipe=t;modalTitle.innerText='Tambah '+t;modal.classList.remove('hidden');toggleFab()}
-function closeModal(){modal.classList.add('hidden');nominal.value='';tipe=''}
+function openModal(){modal.style.display='block'}
+function closeModal(){modal.style.display='none'}
 
 function simpan(){
-  let n=parseInt(nominal.value), k=kategori.value;
-  if(isNaN(n)||n<=0)return;
+  if(!nominal.value) return alert("Nominal wajib diisi");
 
-  if(tipe==='pemasukan'){tunai+=n;transaksi.push({tipe,n,k})}
-  if(tipe==='pengeluaran'){tunai-=n;transaksi.push({tipe,n,k})}
-  if(tipe==='hutang'){hutang.push(n)}
+  if(jenis.value === 'hutang'){
+    hutang.push({
+      nominal: +nominal.value
+    });
+    localStorage.setItem('hutang', JSON.stringify(hutang));
+  } else {
+    data.push({
+      jenis: jenis.value,
+      nominal: +nominal.value,
+      kategori: kategori.value
+    });
+    localStorage.setItem('data', JSON.stringify(data));
+  }
 
-  save(); render(); closeModal();
+  nominal.value='';
+  closeModal();
+  render();
 }
 
-function pindahSaldo(){
-  let j=parseInt(jumlah.value);
-  if(isNaN(j)||j<=0||from.value===to.value)return;
+function resetData(){
+  let pin=prompt("Masukkan PIN:");
+  if(pin){
+    localStorage.clear();
+    data=[];
+    render();
+  }
+}
 
-  if(from.value==='tunai'&&tunai>=j){tunai-=j;bank+=j}
-  if(from.value==='bank'&&bank>=j){bank-=j;tunai+=j}
-
-  jumlah.value=''; save(); render();
+function resetData(){
+  let pin = prompt("Masukkan PIN:");
+  if(pin){
+    localStorage.clear();
+    data = [];
+    hutang = [];
+    render();
+  }
 }
 
 function render(){
-  listTransaksi.innerHTML=''; listHutang.innerHTML='';
-  let masuk=0, keluar=0;
+  let saldo=0, masuk=0, keluar=0;
+  transaksiList.innerHTML='';
+  rekapContent.innerHTML='';
 
-  transaksi.forEach(t=>{
-    let d=document.createElement('div');
-    d.className='card';
-    d.innerHTML=`<b>${t.tipe}</b><br>Rp ${t.n}<br>${t.k}`;
-    listTransaksi.appendChild(d);
-    t.tipe==='pemasukan'?masuk+=t.n:keluar+=t.n;
-  });
-
-  hutang.forEach(h=>{
-    let d=document.createElement('div');
-    d.className='card';
-    d.innerHTML=`Hutang: Rp ${h}`;
-    listHutang.appendChild(d);
-  });
-
-  totalMasuk.innerText=masuk;
-  totalKeluar.innerText=keluar;
-  sisaSaldo.innerText=tunai+bank;
-  document.getElementById('tunai').innerText=tunai;
-  document.getElementById('bank').innerText=bank;
-}
-
-function mintaPin(){
-  let p = prompt("Masukkan PIN untuk reset data:");
-
-  // jika user klik cancel atau kosong
-  if(p === null || p.trim() === ""){
-    alert("Reset dibatalkan");
-    return;
+  if(data.length===0){
+    transaksiEmpty.style.display='block';
+    rekapEmpty.style.display='block';
+  }else{
+    transaksiEmpty.style.display='none';
+    rekapEmpty.style.display='none';
   }
 
-  // PIN bebas / random (dummy)
-  localStorage.removeItem('catatan_keuangan');
-  transaksi = [];
-  hutang = [];
-  tunai = 0;
-  bank = 0;
+  data.forEach(d=>{
+    if(d.jenis==='pemasukan'){saldo+=d.nominal;masuk+=d.nominal}
+    else{saldo-=d.nominal;keluar+=d.nominal}
 
-  render();
-  alert("Semua data berhasil direset");
+    transaksiList.innerHTML+=`
+      <div class="card">
+        <b>${d.jenis}</b><br>
+        Rp ${d.nominal}<br>
+        ${d.kategori}
+      </div>`;
+  });
+
+  saldoEl.innerText=saldo;
+
+  if(data.length>0){
+    rekapContent.innerHTML=`
+      <div class="card">Pemasukan: Rp ${masuk}</div>
+      <div class="card">Pengeluaran: Rp ${keluar}</div>
+      <div class="card">Selisih: Rp ${masuk-keluar}</div>
+      <div class="card">Sisa Saldo: Rp ${saldo}</div>`;
+  }
+  const hutangBox = document.getElementById('hutang');
+
+hutangBox.innerHTML = '';
+
+if(hutang.length === 0){
+  hutangBox.innerHTML = `
+    <div class="empty">
+      <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png">
+      <p>Tidak ada data</p>
+    </div>`;
+} else {
+  hutang.forEach(h => {
+    hutangBox.innerHTML += `
+      <div class="card">
+        Hutang: Rp ${h.nominal}
+      </div>`;
+  });
 }
-
+}
 
 render();
 </script>
