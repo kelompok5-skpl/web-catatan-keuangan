@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Rekap</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<div class="rekap-header">
+  <h2>Rekap</h2>
+</div>
+
+<body class="bg-app page-rekap">
+
+<div class="content rekap-wrap">
+
+  <!-- RINGKASAN -->
+  <div class="rekap-card ringkasan-card">
+    <div class="ringkasan-item">
+      <span>Pemasukan</span>
+      <b class="plus" id="totalMasuk">0</b>
+    </div>
+    <div class="divider"></div>
+    <div class="ringkasan-item">
+      <span>Pengeluaran</span>
+      <b class="minus" id="totalKeluar">0</b>
+    </div>
+    <div class="divider"></div>
+    <div class="ringkasan-item">
+      <span>Selisih</span>
+      <b id="selisih">0</b>
+    </div>
+  </div>
+
+  <!-- GRAFIK -->
+  <div class="rekap-card">
+    <h4>Grafik Perbandingan</h4>
+    <div id="grafik" class="grafik-wrap"></div>
+  </div>
+
+  <!-- TABEL -->
+  <div class="rekap-card">
+    <h4>Tabel Rekap</h4>
+    <table class="rekap-table">
+      <thead>
+        <tr>
+          <th>Periode</th>
+          <th>Pemasukan</th>
+          <th>Pengeluaran</th>
+          <th>Selisih</th>
+        </tr>
+      </thead>
+      <tbody id="tabel"></tbody>
+    </table>
+  </div>
+
+</div>
+
+
+<div class="nav">
+  <button onclick="location.href='transaksi.html'">Transaksi</button>
+  <button onclick="location.href='hutang.html'">Hutang</button>
+  <button class="active">Rekap</button>
+  <button onclick="location.href='setting.html'">Pengaturan</button>
+</div>
+
+<script src="js/rekap.js"></script>
+
+<!-- TOMBOL SORTIR -->
+<div class="sortir-fab" onclick="toggleSortir()">≡</div>
+
+<!-- MENU SORTIR -->
+<div class="sortir-menu" id="sortirMenu">
+  <div onclick="setFilter('harian')">Harian</div>
+  <div onclick="setFilter('mingguan')">Mingguan</div>
+  <div onclick="setFilter('bulanan')">Bulanan</div>
+  <div onclick="setFilter('tahunan')">Tahunan</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Pengaturan</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-app" id="app">
+
+<div class="rekap-header">
+  <h2>Pengaturan</h2>
+</div>
+
+<div class="content">
+
+  <!-- PROFIL -->
+  <div class="setting-card">
+    <b>Profil</b>
+    <p>Nama Pengguna</p>
+    <small>namapengguna@gmail.com</small>
+  </div>
+
+  <!-- TEMA -->
+  <div class="setting-card">
+    <b>Warna Tema</b>
+    <select onchange="setTema(this.value)">
+      <option value="terang">Terang</option>
+      <option value="gelap">Gelap</option>
+      <option value="custom">Custom</option>
+    </select>
+  </div>
+
+  <!-- BAHASA -->
+  <div class="setting-card">
+    <b>Bahasa</b>
+    <select onchange="setBahasa(this.value)">
+      <option value="id">Indonesia</option>
+      <option value="en">Inggris</option>
+    </select>
+  </div>
+
+  <!-- KEAMANAN -->
+  <div class="setting-card" onclick="ubahPin()">
+    <b>Keamanan</b>
+    <p>Ubah PIN</p>
+  </div>
+
+  <!-- BACKUP -->
+  <div class="setting-card" onclick="backupData()">
+    <b>Backup & Pemulihan Data</b>
+    <p>Cadangkan data ke perangkat</p>
+  </div>
+
+</div>
+
+<div class="nav">
+  <button onclick="location.href='transaksi.html'">Transaksi</button>
+  <button onclick="location.href='hutang.html'">Hutang</button>
+  <button onclick="location.href='rekap.html'">Rekap</button>
+  <button class="active">Pengaturan</button>
+</div>
+
+<script src="js/setting.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tambah Transaksi</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-app">
+
+<div class="top-bar">Tambah Transaksi</div>
+
+<div class="content">
+
+  <div class="card">
+    <label>Tanggal</label>
+    <input type="date" id="tanggal">
+
+    <label>Jenis Transaksi</label>
+    <select id="jenis">
+      <option value="pemasukan">Pemasukan</option>
+      <option value="pengeluaran">Pengeluaran</option>
+    </select>
+
+    <label>Kategori</label>
+    <input id="kategori" placeholder="Contoh: Uang saku">
+
+    <label>Judul</label>
+    <input id="judul" placeholder="Contoh: Angpao">
+
+    <label>Nominal</label>
+    <input id="nominal" type="number" placeholder="100000">
+
+    <label>Metode</label>
+    <select id="metode">
+      <option>Uang Tunai</option>
+      <option>Transfer Bank</option>
+    </select>
+
+    <label>Deskripsi</label>
+    <textarea id="deskripsi" rows="3"></textarea>
+
+    <button class="save-btn" onclick="simpan()">Simpan</button>
+    <button class="cancel-btn" onclick="batalTransaksi()">Batal</button>
+
+</div>
+
+</div>
+
+</body>
+<script src="js/tambah-transaksi.js"></script>
+</html>
